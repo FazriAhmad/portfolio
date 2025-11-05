@@ -1,0 +1,103 @@
+/* Modern Portfolio Styles */
+
+/* Global */
+body {
+  background: linear-gradient(to bottom right, #f9fafc, #eef3ff);
+  font-family: "Poppins", sans-serif;
+  color: #212529;
+  scroll-behavior: smooth;
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgba(200,200,200,0.2);
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: .3s ease;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+.nav-link:hover {
+  background: rgba(0,0,0,0.05);
+  color: #0d6efd;
+}
+
+/* Hero Image */
+.profile-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 70%;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 4px;
+  border: 5px solid #ffffff;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+
+/* Buttons */
+.btn-primary-custom {
+  background: #0d6efd;
+  padding: 12px 28px;
+  border-radius: 30px;
+  transition: 0.3s;
+  font-weight: 500;
+  border: none;
+  color: #fff;
+}
+.btn-primary-custom:hover {
+  opacity: .85;
+  transform: translateY(-3px);
+}
+
+/* Section Title */
+.section-title::after {
+  content: "";
+  height: 3px;
+  width: 60px;
+  background: #0d6efd;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  border-radius: 3px;
+}
+
+/* Skill Icons */
+.skill-icon {
+  font-size: 3rem;
+  margin: 12px;
+  transition: 0.3s;
+}
+.skill-icon:hover {
+  transform: scale(1.15);
+}
+
+/* Project Cards */
+.card-custom {
+  border: none;
+  border-radius: 14px;
+  padding: 25px;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+  transition: 0.3s;
+}
+.card-custom:hover {
+  transform: translateY(-6px);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  h1 {
+    font-size: 2.1rem;
+  }
+  .profile-img {
+    width: 130px;
+    height: 130px;
+  }
+}
