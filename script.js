@@ -5,7 +5,6 @@ function InfoKontak() {
   const contactInfo = `
     Email:fazriahmadmustaqim@gmail.com<br>
     Nomor HP: <a href="tel:+6281284020220">+62 812-8402-0220</a><br>
-    LinkedIn: <a href="https://www.linkedin.com/in/fazri-ahmad-37065531b/">LinkedIn Profile</a>
   `;
   document.getElementById("contactField").innerHTML = contactInfo;
 }
@@ -15,6 +14,7 @@ function InfoKontak() {
 AOS.init();
 const toggleBtn = document.getElementById("toggleDark");
 const body = document.body;
+
 
 
 
