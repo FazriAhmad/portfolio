@@ -1,103 +1,133 @@
-/* Modern Portfolio Styles */
+/* ========================================
+    VARIABLES & GLOBAL RESET
+    ========================================
+*/
+:root {
+    --bg-color: #0B0E14;
+    --card-bg: #161B22;
+    --accent-color: #00F0FF;
+    --text-main: #FFFFFF;
+    --text-muted: #94A3B8;
+    --glass-bg: rgba(11, 14, 20, 0.8);
+}
 
-/* Global */
 body {
-  background: linear-gradient(to bottom right, #f9fafc, #eef3ff);
-  font-family: "Poppins", sans-serif;
-  color: #212529;
-  scroll-behavior: smooth;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
 }
 
-/* Navbar */
-.navbar {
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid rgba(200,200,200,0.2);
+/* ========================================
+    NAVIGATION (GLASSMORPHISM)
+    ========================================
+*/
+.glass-nav {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px); /* Safari support */
+    transition: all 0.3s ease;
 }
 
-.nav-link {
-  font-weight: 500;
-  transition: .3s ease;
-  padding: 10px 14px;
-  border-radius: 8px;
-}
-.nav-link:hover {
-  background: rgba(0,0,0,0.05);
-  color: #0d6efd;
+nav.scrolled .glass-nav {
+    background: rgba(11, 14, 20, 0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
 
-/* Hero Image */
-.profile-img {
-  width: 160px;
-  height: 160px;
-  border-radius: 70%;
-  object-fit: contain;
-  background: #ffffff;
-  padding: 4px;
-  border: 5px solid #ffffff;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+/* ========================================
+    PROJECT CARDS & COMPONENTS
+    ========================================
+*/
+.project-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-
-/* Buttons */
-.btn-primary-custom {
-  background: #0d6efd;
-  padding: 12px 28px;
-  border-radius: 30px;
-  transition: 0.3s;
-  font-weight: 500;
-  border: none;
-  color: #fff;
-}
-.btn-primary-custom:hover {
-  opacity: .85;
-  transform: translateY(-3px);
+.project-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(0, 240, 255, 0.3);
 }
 
-/* Section Title */
-.section-title::after {
-  content: "";
-  height: 3px;
-  width: 60px;
-  background: #0d6efd;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -10px;
-  border-radius: 3px;
+.tech-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    color: var(--accent-color);
+    border-radius: 4px;
+    text-transform: uppercase;
 }
 
-/* Skill Icons */
-.skill-icon {
-  font-size: 3rem;
-  margin: 12px;
-  transition: 0.3s;
-}
-.skill-icon:hover {
-  transform: scale(1.15);
-}
-
-/* Project Cards */
-.card-custom {
-  border: none;
-  border-radius: 14px;
-  padding: 25px;
-  background: #fff;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.07);
-  transition: 0.3s;
-}
-.card-custom:hover {
-  transform: translateY(-6px);
+/* ========================================
+    CONTACT SECTION
+    ========================================
+*/
+#contactField a {
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
-/* Responsive */
-@media(max-width: 768px) {
-  h1 {
-    font-size: 2.1rem;
-  }
-  .profile-img {
-    width: 130px;
-    height: 130px;
-  }
+#contactField a:hover {
+    color: var(--accent-color);
 }
+
+/* ========================================
+    ANIMATIONS & PARTICLES
+    ========================================
+*/
+.background-particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    background: var(--accent-color);
+    border-radius: 50%;
+    opacity: 0;
+    animation: float linear infinite;
+}
+
+/* Animasi Melayang Partikel */
+@keyframes float {
+    0% { 
+        transform: translate(0, 0); 
+        opacity: 0; 
+    }
+    20% { 
+        opacity: 0.3; 
+    }
+    80% { 
+        opacity: 0.3; 
+    }
+    100% { 
+        transform: translate(var(--x-end), var(--y-end)); 
+        opacity: 0; 
+    }
+}
+
+/* Animasi Fade In Komponen */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
