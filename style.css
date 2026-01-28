@@ -1,133 +1,126 @@
-/* ========================================
-    VARIABLES & GLOBAL RESET
-    ========================================
-*/
-:root {
-    --bg-color: #0B0E14;
-    --card-bg: #161B22;
-    --accent-color: #00F0FF;
-    --text-main: #FFFFFF;
-    --text-muted: #94A3B8;
-    --glass-bg: rgba(11, 14, 20, 0.8);
-}
+/**
+ * FA.DEV Portfolio Core Script
+ * Berisi: Typewriter, Particle System, Navbar Scroll, dan Contact Toggle
+ */
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    margin: 0;
-    overflow-x: hidden;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. Inisialisasi AOS (Animate On Scroll) ---
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
 
-/* ========================================
-    NAVIGATION (GLASSMORPHISM)
-    ========================================
-*/
-.glass-nav {
-    background: var(--glass-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px); /* Safari support */
-    transition: all 0.3s ease;
-}
+    // --- 2. Efek Typewriter (Hero Section) ---
+    const typewriterElement = document.getElementById('typewriter');
+    const texts = ["Solusi Digital.", "Sistem IoT.", "Masa Depan."];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
 
-nav.scrolled .glass-nav {
-    background: rgba(11, 14, 20, 0.95);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-}
+    function handleTypewriter() {
+        const currentText = texts[textIndex];
+        
+        // Logika pengetikan/penghapusan
+        typewriterElement.textContent = isDeleting 
+            ? currentText.substring(0, charIndex--) 
+            : currentText.substring(0, charIndex++);
 
-/* ========================================
-    PROJECT CARDS & COMPONENTS
-    ========================================
-*/
-.project-card {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 1rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+        // Pengaturan kecepatan
+        let speed = isDeleting ? 50 : 150;
 
-.project-card:hover {
-    transform: translateY(-10px);
-    border-color: rgba(0, 240, 255, 0.3);
-}
+        // Logika pergantian kata
+        if (!isDeleting && charIndex > currentText.length) {
+            isDeleting = true;
+            speed = 2000; // Jeda saat kata selesai diketik
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            speed = 500; // Jeda sebelum mulai kata baru
+        }
 
-.tech-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    padding: 2px 8px;
-    background: rgba(0, 240, 255, 0.1);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    color: var(--accent-color);
-    border-radius: 4px;
-    text-transform: uppercase;
-}
-
-/* ========================================
-    CONTACT SECTION
-    ========================================
-*/
-#contactField a {
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-#contactField a:hover {
-    color: var(--accent-color);
-}
-
-/* ========================================
-    ANIMATIONS & PARTICLES
-    ========================================
-*/
-.background-particles {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-}
-
-.particle {
-    position: absolute;
-    background: var(--accent-color);
-    border-radius: 50%;
-    opacity: 0;
-    animation: float linear infinite;
-}
-
-/* Animasi Melayang Partikel */
-@keyframes float {
-    0% { 
-        transform: translate(0, 0); 
-        opacity: 0; 
+        setTimeout(handleTypewriter, speed);
     }
-    20% { 
-        opacity: 0.3; 
-    }
-    80% { 
-        opacity: 0.3; 
-    }
-    100% { 
-        transform: translate(var(--x-end), var(--y-end)); 
-        opacity: 0; 
-    }
-}
+    
+    if (typewriterElement) handleTypewriter();
 
-/* Animasi Fade In Komponen */
-@keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(10px); 
+    // --- 3. Sistem Partikel (Background) ---
+    const particleContainer = document.getElementById('particles-container');
+    
+    function createParticle() {
+        if (!particleContainer) return;
+
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Properti acak untuk partikel
+        const size = Math.random() * 3 + 1;
+        const duration = Math.random() * 10 + 10;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        
+        // Custom properties untuk animasi CSS
+        particle.style.setProperty('--x-end', `${(Math.random() - 0.5) * 200}px`);
+        particle.style.setProperty('--y-end', `${-200}px`);
+        particle.style.animationDuration = `${duration}s`;
+        
+        particleContainer.appendChild(particle);
+        
+        // Hapus partikel setelah animasi selesai agar tidak membebani RAM
+        setTimeout(() => particle.remove(), duration * 1000);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
+
+    if (particleContainer) setInterval(createParticle, 300);
+
+    // --- 4. Kontrol Navbar (Scroll Effect) ---
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', () => {
+        if (navbar) {
+            window.scrollY > 50 
+                ? navbar.classList.add('scrolled') 
+                : navbar.classList.remove('scrolled');
+        }
+    });
+
+    // --- 5. Tahun Otomatis (Footer) ---
+    const yearElement = document.getElementById('year');
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+});
+
+/**
+ * Fungsi InfoKontak (Global)
+ * Digunakan untuk toggle tampilan tombol WhatsApp & Email
+ */
+function InfoKontak() {
+    const container = document.getElementById("contactField");
+    if (!container) return;
+
+    // Toggle: Jika sudah ada isinya, kosongkan (sembunyikan)
+    if (container.innerHTML !== "") {
+        container.innerHTML = "";
+    } else {
+        // Tampilkan opsi kontak dalam bentuk tombol aksi (Action Buttons)
+        const contactHTML = `
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6 animate-fade-in">
+                <a href="mailto:fazriahmadmustaqim@gmail.com" 
+                   class="flex items-center justify-center gap-2 px-6 py-3 bg-[#161B22] border border-cyan-400/30 text-cyan-400 rounded-xl hover:bg-cyan-400/10 transition-all">
+                    <i class="bi bi-envelope-fill"></i> Kirim Email
+                </a>
+
+                <a href="https://wa.me/6281284020220?text=Halo%20Fazri,%20saya%20melihat%20portofolio%20Anda%20dan%20tertarik%20bekerja%20sama." 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="flex items-center justify-center gap-2 px-6 py-3 bg-[#161B22] border border-green-400/30 text-green-400 rounded-xl hover:bg-green-400/10 transition-all">
+                    <i class="bi bi-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        `;
+        container.innerHTML = contactHTML;
     }
 }
-
-.animate-fade-in {
-    animation: fadeIn 0.4s ease forwards;
-}
-
